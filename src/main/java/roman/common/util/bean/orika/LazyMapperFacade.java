@@ -55,14 +55,14 @@ public class LazyMapperFacade extends MapperFacadeImpl {
                     //注册ClassMap
                     ClassMap classMap = descClass.getAnnotation(ClassMap.class);
                     if (classMap != null) {
-                        Arrays.stream(classMap.converter()).parallel().forEach(this::registerConverter);
-                        Arrays.stream(classMap.mapper()).parallel().forEach(this::registerMapper);
-                        Arrays.stream(classMap.filter()).parallel().forEach(this::registerFilter);
-                        Arrays.stream(classMap.mapNullsDisable()).parallel().forEach(initMapNullsDisable(descClass));
+                        Arrays.stream(classMap.converter()).forEach(this::registerConverter);
+                        Arrays.stream(classMap.mapper()).forEach(this::registerMapper);
+                        Arrays.stream(classMap.filter()).forEach(this::registerFilter);
+                        Arrays.stream(classMap.mapNullsDisable()).forEach(initMapNullsDisable(descClass));
                     }
                     //注册FieldMap
                     List<Field> fields = getAllFields(descClass);
-                    fields.parallelStream().forEach(initFieldMapper(descClass));
+                    fields.forEach(initFieldMapper(descClass));
 
                     initCache.add(descClass);
                 }

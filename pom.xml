@@ -21,11 +21,18 @@
     </build>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/net.rakugakibox.spring.boot/orika-spring-boot-starter -->
+        <!-- https://mvnrepository.com/artifact/ma.glasnost.orika/orika-core -->
         <dependency>
-            <groupId>net.rakugakibox.spring.boot</groupId>
-            <artifactId>orika-spring-boot-starter</artifactId>
-            <version>1.6.0</version>
+            <groupId>ma.glasnost.orika</groupId>
+            <artifactId>orika-core</artifactId>
+            <version>1.5.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>

@@ -1,4 +1,4 @@
-package roman.common.util.bean.test;
+package roman.common.util.bean;
 
 import roman.common.util.bean.orika.annotation.FieldMap;
 import roman.common.util.bean.orika.annotation.FieldMaps;
@@ -11,8 +11,6 @@ public class UserA {
             @FieldMap(origClass = User.class,origField = "name")
     })
     private String nameA;
-
-    private UserA user;
 
     public Long getId() {
         return id;
@@ -32,17 +30,9 @@ public class UserA {
 
     @Override
     public String toString() {
-        return "roman.common.util.bean.test.UserA{" +
+        return "roman.common.util.bean.BeanUtilsTest.UserA{" +
                 "id=" + id +
                 ", nameA='" + nameA + '\'' +
                 '}';
-    }
-
-    public UserA getUser() {
-        return user;
-    }
-
-    public void setUser(UserA user) {
-        this.user = user;
     }
 }

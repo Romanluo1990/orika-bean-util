@@ -1,9 +1,9 @@
-package roman.common.util.bean.test;
+package roman.common.util.bean;
 
 import ma.glasnost.orika.CustomMapper;
 import ma.glasnost.orika.MappingContext;
 
-public class UserAToUser extends CustomMapper<User,UserA> {
+public class UserToUserA extends CustomMapper<User,UserA> {
 
     @Override
     public void mapAtoB(User user, UserA userA, MappingContext context) {

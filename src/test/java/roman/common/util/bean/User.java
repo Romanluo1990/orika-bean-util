@@ -1,10 +1,9 @@
-package roman.common.util.bean.test;
+package roman.common.util.bean;
 
 public class User {
+
     private Long id;
     private String name;
-
-    private User user;
 
     public Long getId() {
         return id;
@@ -22,12 +21,4 @@ public class User {
         this.name = name;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }
-
