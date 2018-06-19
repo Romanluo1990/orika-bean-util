@@ -4,6 +4,7 @@ import ma.glasnost.orika.*;
 import ma.glasnost.orika.converter.ConverterFactory;
 import ma.glasnost.orika.impl.ExceptionUtility;
 import ma.glasnost.orika.impl.MapperFacadeImpl;
+import ma.glasnost.orika.metadata.ClassMapBuilder;
 import ma.glasnost.orika.metadata.FieldMapBuilder;
 import ma.glasnost.orika.metadata.Type;
 import ma.glasnost.orika.metadata.TypeFactory;
@@ -52,18 +53,19 @@ public class LazyMapperFacade extends MapperFacadeImpl {
             Type<?> destinationType = TypeFactory.valueOf(descClass);
             synchronized (destinationType) {
                 if (!initCache.contains(descClass)) {
+                    Map<Class,ClassMapBuilder> descClassMapBuilders = new HashMap<>();
                     //注册ClassMap
                     ClassMap classMap = descClass.getAnnotation(ClassMap.class);
                     if (classMap != null) {
                         Arrays.stream(classMap.converter()).forEach(this::registerConverter);
                         Arrays.stream(classMap.mapper()).forEach(this::registerMapper);
                         Arrays.stream(classMap.filter()).forEach(this::registerFilter);
-                        Arrays.stream(classMap.mapNullsDisable()).forEach(initMapNullsDisable(descClass));
+                        Arrays.stream(classMap.mapNullsDisable()).forEach(initMapNullsDisable(descClass,descClassMapBuilders));
                     }
                     //注册FieldMap
                     List<Field> fields = getAllFields(descClass);
-                    fields.forEach(initFieldMapper(descClass));
-
+                    fields.forEach(initFieldMapper(descClass,descClassMapBuilders));
+                    descClassMapBuilders.values().stream().map(ClassMapBuilder::byDefault).forEach(ClassMapBuilder::register);
                     initCache.add(descClass);
                 }
             }
@@ -71,7 +73,7 @@ public class LazyMapperFacade extends MapperFacadeImpl {
 
     }
 
-    private Consumer<Field> initFieldMapper(Class<?> classB) {
+    private Consumer<Field> initFieldMapper(Class<?> classB, Map<Class, ClassMapBuilder> descClassMapBuilders) {
         return field -> {
             List<FieldMap> fieldMapList;
             FieldMaps fieldMaps = field.getAnnotation(FieldMaps.class);
@@ -85,11 +87,11 @@ public class LazyMapperFacade extends MapperFacadeImpl {
             if(fieldMapList.isEmpty())
                 return;
             String destField = field.getName();
-            fieldMapList.parallelStream().forEach(registerFieldMap(classB,destField));
+            fieldMapList.forEach(addFieldMapBuilder(classB,destField,descClassMapBuilders));
         };
     }
 
-    private Consumer<? super FieldMap> registerFieldMap(Class<?> classB, String destField) {
+    private Consumer<? super FieldMap> addFieldMapBuilder(Class<?> classB, String destField, Map<Class, ClassMapBuilder> descClassMapBuilders) {
         return fieldMap -> {
             Class<?> classA = fieldMap.origClass();
             String orgiField = fieldMap.origField();
@@ -101,12 +103,17 @@ public class LazyMapperFacade extends MapperFacadeImpl {
             boolean byDefault = fieldMap.byDefault();
             boolean mapNulls = fieldMap.mapNulls();
             boolean exclude = fieldMap.exclude();
-            FieldMapBuilder fieldMapBuilder = mapperFactory.classMap(classA,classB)
+            ClassMapBuilder classMapBuilder = descClassMapBuilders.get(classA);
+            if(classMapBuilder == null){
+                classMapBuilder = mapperFactory.classMap(classA,classB);
+                descClassMapBuilders.put(classA, classMapBuilder);
+            }
+            FieldMapBuilder fieldMapBuilder = classMapBuilder
                     .fieldMap(orgiField,destField,byDefault)
                     .mapNulls(mapNulls);
             if(exclude)
                 fieldMapBuilder.exclude();
-            fieldMapBuilder.add().byDefault().register();
+            fieldMapBuilder.add();
         };
     }
 
@@ -154,7 +161,14 @@ public class LazyMapperFacade extends MapperFacadeImpl {
         }
     }
 
-    private Consumer<Class<?>> initMapNullsDisable(Class<?> classB) {
-        return classA -> mapperFactory.classMap(classA,classB).mapNulls(false).byDefault().register();
+    private Consumer<Class<?>> initMapNullsDisable(Class<?> classB, Map<Class, ClassMapBuilder> descClassMapBuilders) {
+        return classA ->{
+            ClassMapBuilder classMapBuilder = descClassMapBuilders.get(classA);
+            if(classMapBuilder == null){
+                classMapBuilder = mapperFactory.classMap(classA,classB);
+                descClassMapBuilders.put(classA, classMapBuilder);
+            }
+            classMapBuilder.mapNulls(false);
+        };
     }
 }
