@@ -11,11 +11,11 @@ import java.lang.annotation.*;
 @Inherited
 public @interface ClassMap {
 
-    Class<? extends Converter<?,?>>[] converter() default {};
+	Class<? extends Converter<?, ?>>[] converter() default {};
 
-    Class<? extends Mapper<?,?>>[] mapper() default {};
+	Class<? extends Mapper<?, ?>>[] mapper() default {};
 
-    Class<? extends Filter<?,?>>[] filter() default {};
+	Class<? extends Filter<?, ?>>[] filter() default {};
 
-    Class<?>[] mapNullsDisable() default {};
+	Class<?>[] mapNullsDisable() default {};
 }

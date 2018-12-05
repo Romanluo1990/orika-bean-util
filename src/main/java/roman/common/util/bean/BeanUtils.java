@@ -37,7 +37,4 @@ public class BeanUtils {
         getInstance().mapToCollection(origs, destClass, collection);
     }
 
-    public static void registerClassMapperByAnnotation(Class<?> descClass) {
-        getInstance().registerClassMapperByAnnotation(descClass);
-    }
 }

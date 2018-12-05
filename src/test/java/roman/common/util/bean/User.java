@@ -1,8 +1,13 @@
 package roman.common.util.bean;
 
+import roman.common.util.bean.orika.annotation.DestFieldMap;
+import roman.common.util.bean.orika.annotation.OrigFieldMap;
+
 public class User {
 
     private Long id;
+
+	@OrigFieldMap(destClass = UserA.class, destField = "nameC")
     private String name;
 
     public Long getId() {

@@ -39,7 +39,4 @@ public class BeanUtilsBean {
         mapper.mapAsCollection(origs,collection,destClass);
     }
 
-    public void registerClassMapperByAnnotation(Class<?> descClass) {
-        mapper.registerClassMapperByAnnotation(descClass);
-    }
 }

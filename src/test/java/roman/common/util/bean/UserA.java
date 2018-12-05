@@ -1,38 +1,61 @@
 package roman.common.util.bean;
 
-import roman.common.util.bean.orika.annotation.FieldMap;
-import roman.common.util.bean.orika.annotation.FieldMaps;
+import roman.common.util.bean.orika.annotation.DestFieldMap;
+import roman.common.util.bean.orika.annotation.DestFieldMaps;
 
 public class UserA {
 
     private Long id;
 
-    @FieldMaps({
-            @FieldMap(origClass = User.class,origField = "name")
+    @DestFieldMaps({
+            @DestFieldMap(origClass = User.class,origField = "name")
     })
     private String nameA;
 
-    public Long getId() {
-        return id;
-    }
+    @DestFieldMap(origClass = User.class,origField = "name")
+    private String nameB;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	private String nameC;
 
-    public String getNameA() {
-        return nameA;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setNameA(String nameA) {
-        this.nameA = nameA;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    @Override
-    public String toString() {
-        return "roman.common.util.bean.BeanUtilsTest.UserA{" +
-                "id=" + id +
-                ", nameA='" + nameA + '\'' +
-                '}';
-    }
+	public String getNameA() {
+		return nameA;
+	}
+
+	public void setNameA(String nameA) {
+		this.nameA = nameA;
+	}
+
+	public String getNameB() {
+		return nameB;
+	}
+
+	public void setNameB(String nameB) {
+		this.nameB = nameB;
+	}
+
+	public String getNameC() {
+		return nameC;
+	}
+
+	public void setNameC(String nameC) {
+		this.nameC = nameC;
+	}
+
+	@Override
+	public String toString() {
+		return "UserA{" +
+				"id=" + id +
+				", nameA='" + nameA + '\'' +
+				", nameB='" + nameB + '\'' +
+				", nameC='" + nameC + '\'' +
+				'}';
+	}
 }
