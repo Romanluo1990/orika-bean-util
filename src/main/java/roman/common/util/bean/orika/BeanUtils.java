@@ -1,4 +1,4 @@
-package roman.common.util.bean;
+package roman.common.util.bean.orika;
 
 import java.util.Collection;
 import java.util.List;

@@ -1,4 +1,4 @@
-package roman.common.util.bean;
+package roman.common.util.bean.orika;
 
 import ma.glasnost.orika.impl.DefaultMapperFactory;
 import roman.common.util.bean.orika.LazyMapperFacade;

@@ -3,6 +3,7 @@ package roman.common.util.bean;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
 import org.junit.Test;
+import roman.common.util.bean.orika.BeanUtils;
 
 public class BeanUtilsTest {
 
