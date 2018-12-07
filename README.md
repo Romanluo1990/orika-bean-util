@@ -30,7 +30,7 @@ public class User {
 
     private Long id;
 
-	  @OrigFieldMap(destClass = UserA.class, destField = "nameC")
+    @OrigFieldMap(destClass = UserA.class, destField = "nameC")
     private String name;
 
 }
