@@ -21,7 +21,7 @@ public class UserA {
     @DestFieldMap(origClass = User.class,origField = "name")
     private String nameB;
 
-	private String nameC;
+    private String nameC;
 
 }
 
