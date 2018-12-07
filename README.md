@@ -1,9 +1,9 @@
 # orika-bean-util
 基于orika的BeanUtil工具包
 ---
-支持注解映射
-@DestFieldMap 目标对象字段映射（用在目标对象上）
-@OrigFieldMap 源对象字段映射（用在源对象上）
+支持注解映射  
+@DestFieldMap 目标对象字段映射（用在目标对象上）  
+@OrigFieldMap 源对象字段映射（用在源对象上）  
 
 ## example
 ```
